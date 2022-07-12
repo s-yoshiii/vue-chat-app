@@ -48,10 +48,15 @@
 </template>
 
 <script>
+import { db } from "@/firebase/firebase";
+import { collection, doc } from "firebase/firestore";
 export default {
   created() {
     this.user_id = this.$route.query.user_id;
-    console.log("user_id", this.user_id);
+    // console.log("user_id", this.user_id);
+    const chatRef = collection(db, "chats");
+    const snapshot = doc(chatRef);
+    console.log(snapshot);
   },
   data: () => ({
     messages: [
