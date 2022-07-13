@@ -48,24 +48,19 @@
 </template>
 
 <script>
-import { db } from "@/firebase/firebase";
-import { collection, doc } from "firebase/firestore";
+import firebase from "@/firebase/firebase";
 export default {
-  created() {
+  async created() {
     this.user_id = this.$route.query.user_id;
-    // console.log("user_id", this.user_id);
-    const chatRef = collection(db, "chats");
-    const snapshot = doc(chatRef);
+    const chatRef = firebase.firestore().collection("chats");
+    const snapshot = await chatRef.get();
     console.log(snapshot);
+    snapshot.forEach((doc) => {
+      this.messages.push(doc.data());
+    });
   },
   data: () => ({
-    messages: [
-      { message: "message1" },
-      { message: "message2" },
-      { message: "message3" },
-      { message: "message4" },
-      { message: "message5" },
-    ],
+    messages: [],
     body: "",
     user_id: "",
     cards: ["Today"],
