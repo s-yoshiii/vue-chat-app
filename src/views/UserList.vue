@@ -1,5 +1,6 @@
 <template>
   <v-app id="inspire">
+    <SideBar />
     <v-app-bar app shrink-on-scroll>
       <v-toolbar-title>ユーザー一覧</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -23,7 +24,10 @@
 </template>
 
 <script>
+import SideBar from "@/components/layouts/SideBar";
 export default {
-  //
+  components: {
+    SideBar,
+  },
 };
 </script>

@@ -1,5 +1,6 @@
 <template>
   <v-app id="inspire">
+    <SideBar />
     <v-main>
       <v-container class="py-8 px-6" fluid>
         <v-row>
@@ -49,7 +50,11 @@
 
 <script>
 import firebase from "@/firebase/firebase";
+import SideBar from "@/components/layouts/SideBar";
 export default {
+  components: {
+    SideBar,
+  },
   async created() {
     this.user_id = this.$route.query.user_id;
     const chatRef = firebase.firestore().collection("chats");

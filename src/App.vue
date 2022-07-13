@@ -4,7 +4,6 @@
       <!-- <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> -->
     </nav>
-    <SideBar />
     <router-view />
   </div>
 </template>
@@ -19,11 +18,10 @@
 }
 
 nav {
-  padding: 30px;
-
   a {
     font-weight: bold;
     color: #2c3e50;
+    text-align: left;
 
     &.router-link-exact-active {
       color: #42b983;
@@ -42,10 +40,7 @@ nav {
 }
 </style>
 <script>
-import SideBar from "@/components/layouts/SideBar";
 export default {
-  components: {
-    SideBar,
-  },
+  components: {},
 };
 </script>
