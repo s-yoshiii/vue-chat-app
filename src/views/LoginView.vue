@@ -1,44 +1,57 @@
 <template>
   <v-app id="inspire">
-    <v-form ref="form" v-model="valid" lazy-validation>
-      <v-text-field
-        v-model="name"
-        :counter="10"
-        :rules="nameRules"
-        label="Name"
-        required
-      ></v-text-field>
+    <div class="login-box">
+      <v-card class="login-form">
+        <v-card-title class="login-title">Login</v-card-title>
+        <v-card-subtitle>ユーザー情報をご入力下さい</v-card-subtitle>
+        <v-form ref="form" v-model="valid" lazy-validation>
+          <v-text-field
+            v-model="name"
+            :counter="10"
+            :rules="nameRules"
+            label="Name"
+            required
+          ></v-text-field>
 
-      <v-text-field
-        v-model="email"
-        :rules="emailRules"
-        label="E-mail"
-        required
-      ></v-text-field>
+          <v-text-field
+            v-model="email"
+            :rules="emailRules"
+            label="E-mail"
+            required
+          ></v-text-field>
 
-      <v-select
-        v-model="select"
-        :items="items"
-        :rules="[(v) => !!v || 'Item is required']"
-        label="Item"
-        required
-      ></v-select>
+          <v-select
+            v-model="select"
+            :items="items"
+            :rules="[(v) => !!v || 'Item is required']"
+            label="Item"
+            required
+          ></v-select>
 
-      <v-checkbox
-        v-model="checkbox"
-        :rules="[(v) => !!v || 'You must agree to continue!']"
-        label="Do you agree?"
-        required
-      ></v-checkbox>
+          <v-checkbox
+            v-model="checkbox"
+            :rules="[(v) => !!v || 'You must agree to continue!']"
+            label="Do you agree?"
+            required
+          ></v-checkbox>
 
-      <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">
-        Validate
-      </v-btn>
+          <v-btn
+            :disabled="!valid"
+            color="success"
+            class="mr-4"
+            @click="validate"
+          >
+            Validate
+          </v-btn>
 
-      <v-btn color="error" class="mr-4" @click="reset"> Reset Form </v-btn>
+          <v-btn color="error" class="mr-4" @click="reset"> Reset Form </v-btn>
 
-      <v-btn color="warning" @click="resetValidation"> Reset Validation </v-btn>
-    </v-form>
+          <v-btn color="warning" @click="resetValidation">
+            Reset Validation
+          </v-btn>
+        </v-form>
+      </v-card>
+    </div>
   </v-app>
 </template>
 
@@ -74,3 +87,17 @@ export default {
   },
 };
 </script>
+<style scoped>
+.login-form {
+  margin: 150px;
+  padding: 30px;
+}
+.login-box {
+  width: 50%;
+  margin: 0 auto;
+  padding: 30px;
+}
+.login-title {
+  display: inline-block;
+}
+</style>
