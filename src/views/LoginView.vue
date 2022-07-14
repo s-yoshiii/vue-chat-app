@@ -16,7 +16,9 @@
             label="Password"
             type="password"
           ></v-text-field>
-          <v-btn color="success" class="login-btn">LOGIN</v-btn>
+          <v-btn color="success" class="login-btn" :disabled="isValid"
+            >LOGIN</v-btn
+          >
           <v-btn>CLEAR</v-btn>
         </v-form>
       </v-card>
@@ -30,12 +32,17 @@ export default {
     valid: true,
     email: "",
     emailRules: [
-      (v) => !!v || "E-mail is required",
-      (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+      (v) => !!v || "メールアドレスを入力して下さい",
+      (v) => /.+@.+\..+/.test(v) || "メールアドレスが不正です",
     ],
     password: "",
   }),
-
+  computed: {
+    isValid() {
+      console.log("isValid", this.valid);
+      return !this.valid;
+    },
+  },
   methods: {
     validate() {
       this.$refs.form.validate();
