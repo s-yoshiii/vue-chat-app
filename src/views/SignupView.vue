@@ -2,10 +2,16 @@
   <v-app id="inspire">
     <div class="login-box">
       <v-card class="login-form">
-        <v-card-title class="login-title">Login</v-card-title>
+        <v-card-title class="login-title">SignUp</v-card-title>
         <v-card-subtitle>ユーザー情報をご入力下さい</v-card-subtitle>
-        <v-btn color="light-blue" text to="/signup">新規登録はこちら</v-btn>
+        <v-btn color="light-blue" text to="/login">ログインはこちら</v-btn>
         <v-form ref="form" v-model="valid" lazy-validation>
+          <v-text-field
+            v-model="name"
+            :rules="nameRules"
+            label="User Name"
+            required
+          ></v-text-field>
           <v-text-field
             v-model="email"
             :rules="emailRules"
@@ -18,9 +24,9 @@
             type="password"
           ></v-text-field>
           <v-btn color="success" class="login-btn" :disabled="isValid"
-            >LOGIN</v-btn
+            >SIGN UP</v-btn
           >
-          <v-btn @click="reset">CLEAR</v-btn>
+          <v-btn>CLEAR</v-btn>
         </v-form>
       </v-card>
     </div>
@@ -31,6 +37,11 @@
 export default {
   data: () => ({
     valid: true,
+    name: "",
+    nameRules: [
+      (v) => !!v || "名前を入力して下さい",
+      (v) => (v && v.length <= 10) || "名前は10文字以内で入力して下さい",
+    ],
     email: "",
     emailRules: [
       (v) => !!v || "メールアドレスを入力して下さい",
