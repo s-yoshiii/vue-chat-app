@@ -23,7 +23,11 @@
             label="Password"
             type="password"
           ></v-text-field>
-          <v-btn color="success" class="login-btn" :disabled="isValid"
+          <v-btn
+            color="success"
+            class="login-btn"
+            :disabled="isValid"
+            @click="submit"
             >SIGN UP</v-btn
           >
           <v-btn>CLEAR</v-btn>
@@ -34,6 +38,7 @@
 </template>
 
 <script>
+import firebase from "@/firebase/firebase";
 export default {
   data: () => ({
     valid: true,
@@ -64,6 +69,17 @@ export default {
     },
     resetValidation() {
       this.$refs.form.resetValidation();
+    },
+    submit() {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.email, this.password)
+        .then((result) => {
+          console.log("successs", result);
+        })
+        .catch((error) => {
+          console.log("fail", error);
+        });
     },
   },
 };
