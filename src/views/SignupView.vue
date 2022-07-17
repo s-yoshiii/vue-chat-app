@@ -74,8 +74,12 @@ export default {
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
-        .then((result) => {
+        .then(async (result) => {
           console.log("successs", result);
+          await result.user.updateProfile({
+            displayName: this.name,
+          });
+          console.log("updateuser", this.name);
         })
         .catch((error) => {
           console.log("fail", error);
