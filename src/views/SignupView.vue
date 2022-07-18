@@ -31,6 +31,15 @@
             >SIGN UP</v-btn
           >
           <v-btn>CLEAR</v-btn>
+          <v-alert
+            class="error-message"
+            dense
+            outlined
+            type="error"
+            v-if="errorMessage"
+          >
+            {{ errorMessage }}
+          </v-alert>
         </v-form>
       </v-card>
     </div>
@@ -53,6 +62,7 @@ export default {
       (v) => /.+@.+\..+/.test(v) || "メールアドレスが不正です",
     ],
     password: "",
+    errorMessage: "",
   }),
   computed: {
     isValid() {
@@ -79,10 +89,12 @@ export default {
           await result.user.updateProfile({
             displayName: this.name,
           });
-          console.log("updateuser", this.name);
+          console.log("updateuser", this.user);
+          this.$router.push("/login");
         })
         .catch((error) => {
           console.log("fail", error);
+          this.errorMessage = "ユーザーの新規作成に失敗しました。";
         });
     },
   },
@@ -103,5 +115,8 @@ export default {
 }
 .login-btn {
   margin-right: 20px;
+}
+.error-message {
+  margin-top: 30px;
 }
 </style>
