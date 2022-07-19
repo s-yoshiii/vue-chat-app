@@ -14,6 +14,12 @@
           <v-list-item-title>{{ text }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
+      <v-list-item>
+        <v-list-item-icon><v-icon>mdi-logout</v-icon></v-list-item-icon>
+        <v-list-item-content
+          ><v-list-item-title>Logout</v-list-item-title></v-list-item-content
+        >
+      </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -30,3 +36,26 @@ export default {
   }),
 };
 </script>
+<style lang="scss">
+nav {
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+    text-align: left;
+
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
+}
+.grey.darken-1 {
+  background-color: #757575 !important;
+  border-color: #757575 !important;
+}
+.v-application .pa-4 {
+  padding: 16px !important;
+}
+.username {
+  padding-top: 10px;
+}
+</style>

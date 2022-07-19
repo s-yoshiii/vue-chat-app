@@ -16,28 +16,6 @@
   text-align: center;
   color: #2c3e50;
 }
-
-nav {
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    text-align: left;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-.grey.darken-1 {
-  background-color: #757575 !important;
-  border-color: #757575 !important;
-}
-.v-application .pa-4 {
-  padding: 16px !important;
-}
-.username {
-  padding-top: 10px;
-}
 </style>
 <script>
 export default {
