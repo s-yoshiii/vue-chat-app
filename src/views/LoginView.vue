@@ -21,6 +21,15 @@
             >LOGIN</v-btn
           >
           <v-btn @click="reset">CLEAR</v-btn>
+          <v-alert
+            dense
+            text
+            type="success"
+            class="success-message"
+            v-if="message"
+          >
+            {{ message }}
+          </v-alert>
         </v-form>
       </v-card>
     </div>
@@ -37,7 +46,14 @@ export default {
       (v) => /.+@.+\..+/.test(v) || "メールアドレスが不正です",
     ],
     password: "",
+    message: "",
   }),
+  mounted() {
+    if (localStorage.message) {
+      this.message = localStorage.message;
+      localStorage.message = "";
+    }
+  },
   computed: {
     isValid() {
       console.log("isValid", this.valid);
@@ -72,5 +88,8 @@ export default {
 }
 .login-btn {
   margin-right: 20px;
+}
+.success-message {
+  margin-top: 20px;
 }
 </style>

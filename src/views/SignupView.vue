@@ -90,6 +90,7 @@ export default {
             displayName: this.name,
           });
           console.log("updateuser", this.user);
+          localStorage.message = "新規作成に成功しました";
           this.$router.push("/login");
         })
         .catch((error) => {
