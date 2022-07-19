@@ -1,7 +1,15 @@
 <template>
   <v-navigation-drawer v-model="drawer" app>
     <v-sheet color="grey lighten-4" class="pa-4">
-      <v-avatar class="mb-4" color="grey darken-1" size="64"></v-avatar>
+      <v-avatar color="indigo">
+        <input
+          type="file"
+          ref="fileInput"
+          accept="image/jpeg,image/jpg,image/png"
+          style="display: none"
+        />
+        <v-icon dark @click="changeIcon"> mdi-account-circle </v-icon>
+      </v-avatar>
       <div class="username">{{ auth && auth.displayName }}</div>
     </v-sheet>
     <v-divider></v-divider>
@@ -53,6 +61,10 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    changeIcon() {
+      console.log("changeEvent called");
+      this.$refs.fileInput.click();
     },
   },
 };
