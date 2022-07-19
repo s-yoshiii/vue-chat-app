@@ -5,6 +5,7 @@ import UserList from "../views/UserList.vue";
 import ChatBoard from "../views/ChatBoard.vue";
 import LoginView from "../views/LoginView.vue";
 import SignupView from "../views/SignupView.vue";
+import firebase from "@/firebase/firebase";
 
 Vue.use(VueRouter);
 
@@ -13,6 +14,7 @@ const routes = [
     path: "/",
     name: "home",
     component: UserList,
+    meta: { requiresAuth: true },
   },
   {
     path: "/about",
@@ -44,6 +46,24 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+  if (requiresAuth) {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (!user) {
+        next({
+          path: "/login",
+          query: { redirect: to.fullPath },
+        });
+      } else {
+        next();
+      }
+    });
+  } else {
+    next();
+  }
 });
 
 export default router;

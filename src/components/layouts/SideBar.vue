@@ -15,10 +15,12 @@
         </v-list-item-content>
       </v-list-item>
       <v-list-item @click="logout">
-        <v-list-item-icon><v-icon>mdi-logout</v-icon></v-list-item-icon>
-        <v-list-item-content
-          ><v-list-item-title>Logout</v-list-item-title></v-list-item-content
-        >
+        <v-list-item-icon>
+          <v-icon>mdi-logout</v-icon>
+        </v-list-item-icon>
+        <v-list-item-content>
+          <v-list-item-title>Logout</v-list-item-title>
+        </v-list-item-content>
       </v-list-item>
     </v-list>
   </v-navigation-drawer>
@@ -55,10 +57,6 @@ export default {
 <style lang="scss">
 nav {
   a {
-    font-weight: bold;
-    color: #2c3e50;
-    text-align: left;
-
     &.router-link-exact-active {
       color: #42b983;
     }
@@ -67,6 +65,11 @@ nav {
 .grey.darken-1 {
   background-color: #757575 !important;
   border-color: #757575 !important;
+}
+.v-list-item {
+  font-weight: bold;
+  color: #2c3e50;
+  text-align: left;
 }
 .v-application .pa-4 {
   padding: 16px !important;
