@@ -92,7 +92,13 @@ export default {
         .signInWithEmailAndPassword(this.email, this.password)
         .then((result) => {
           console.log("user", result.user);
-          console.log("success");
+          const auth = {
+            displayName: result.user.displayName,
+            email: result.user.email,
+            uid: result.user.uid,
+            refreshToken: result.user.refreshToken,
+          };
+          sessionStorage.setItem("user", JSON.stringify(auth));
           this.$router.push("/");
         })
         .catch((error) => {

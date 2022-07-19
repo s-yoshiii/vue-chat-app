@@ -2,7 +2,7 @@
   <v-navigation-drawer v-model="drawer" app>
     <v-sheet color="grey lighten-4" class="pa-4">
       <v-avatar class="mb-4" color="grey darken-1" size="64"></v-avatar>
-      <div class="username">john@vuetifyjs.com</div>
+      <div class="username">{{ auth && auth.displayName }}</div>
     </v-sheet>
     <v-divider></v-divider>
     <v-list>
@@ -28,6 +28,9 @@
 <script>
 import firebase from "@/firebase/firebase";
 export default {
+  mounted() {
+    this.auth = JSON.parse(sessionStorage.getItem("user"));
+  },
   data: () => ({
     drawer: null,
     links: [
