@@ -71,7 +71,6 @@ export default {
   },
   computed: {
     isValid() {
-      console.log("isValid", this.valid);
       return !this.valid;
     },
   },
@@ -86,7 +85,6 @@ export default {
       this.$refs.form.resetValidation();
     },
     submit() {
-      console.log("submit call");
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)

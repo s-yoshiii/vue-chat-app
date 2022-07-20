@@ -51,7 +51,6 @@ export default {
   }),
   methods: {
     logout() {
-      console.log("logout");
       firebase
         .auth()
         .signOut()
@@ -67,15 +66,25 @@ export default {
       this.$refs.fileInput.click();
     },
     updateIcon() {
-      console.log("update icon run");
       const user = this.getAuth();
       if (!user) {
         sessionStorage.removeItem("user");
         this.$router.push("/login");
       }
+      const file = this.$refs.fileInput.files[0];
+      const filePath = `/user/${file.name}`;
+      console.log(file);
+      firebase
+        .storage()
+        .ref()
+        .child(filePath)
+        .put(file)
+        .then((snapshot) => {
+          console.log("snapshot", snapshot);
+        });
     },
     getAuth() {
-      firebase.auth().onAuthStateChanged((user) => {
+      return firebase.auth().onAuthStateChanged((user) => {
         return user;
       });
     },
