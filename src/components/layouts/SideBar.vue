@@ -7,6 +7,7 @@
           ref="fileInput"
           accept="image/jpeg,image/jpg,image/png"
           style="display: none"
+          @change="updateIcon"
         />
         <v-icon dark @click="changeIcon"> mdi-account-circle </v-icon>
       </v-avatar>
@@ -63,8 +64,20 @@ export default {
         });
     },
     changeIcon() {
-      console.log("changeEvent called");
       this.$refs.fileInput.click();
+    },
+    updateIcon() {
+      console.log("update icon run");
+      const user = this.getAuth();
+      if (!user) {
+        sessionStorage.removeItem("user");
+        this.$router.push("/login");
+      }
+    },
+    getAuth() {
+      firebase.auth().onAuthStateChanged((user) => {
+        return user;
+      });
     },
   },
 };
