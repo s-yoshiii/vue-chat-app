@@ -9,7 +9,10 @@
           style="display: none"
           @change="updateIcon"
         />
-        <v-icon dark @click="changeIcon"> mdi-account-circle </v-icon>
+        <v-icon dark @click="changeIcon" v-if="!photoUrl">
+          mdi-account-circle
+        </v-icon>
+        <img :src="photoURL" @click="changeIcon" alt="" v-if="photoUrl" />
       </v-avatar>
       <div class="username">{{ auth && auth.displayName }}</div>
     </v-sheet>
@@ -39,6 +42,7 @@ import firebase from "@/firebase/firebase";
 export default {
   mounted() {
     this.auth = JSON.parse(sessionStorage.getItem("user"));
+    this.photoUrl = this.auth.photoURL;
   },
   data: () => ({
     drawer: null,
@@ -48,6 +52,8 @@ export default {
       ["mdi-delete", "Trash", "/about"],
       ["mdi-alert-octagon", "Spam", "/about"],
     ],
+    auth: null,
+    photoUrl: "",
   }),
   methods: {
     logout() {
@@ -73,14 +79,24 @@ export default {
       }
       const file = this.$refs.fileInput.files[0];
       const filePath = `/user/${file.name}`;
-      console.log(file);
       firebase
         .storage()
         .ref()
         .child(filePath)
         .put(file)
-        .then((snapshot) => {
-          console.log("snapshot", snapshot);
+        .then(async (snapshot) => {
+          const photoUrl = await snapshot.ref.getDownloadURL();
+          console.log("photoUrl", photoUrl);
+          firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+              user.updateProfile({
+                photoURL: photoUrl,
+              });
+              this.auth.photoURL = photoUrl;
+              sessionStorage.setItem("user", JSON.stringify(this.auth));
+              this.photoUrl = photoUrl;
+            }
+          });
         });
     },
     getAuth() {

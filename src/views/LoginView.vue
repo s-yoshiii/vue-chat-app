@@ -95,6 +95,7 @@ export default {
             email: result.user.email,
             uid: result.user.uid,
             refreshToken: result.user.refreshToken,
+            photoUrl: result.user.photoURL,
           };
           sessionStorage.setItem("user", JSON.stringify(auth));
           this.$router.push("/");
@@ -109,11 +110,11 @@ export default {
 </script>
 <style scoped>
 .login-form {
-  margin: 150px;
+  margin: 50px;
   padding: 30px;
 }
 .login-box {
-  width: 50%;
+  width: clamp(600px, 50%, 1000px);
   margin: 0 auto;
   padding: 30px;
 }
