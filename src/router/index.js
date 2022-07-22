@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 // import HomeView from "../views/HomeView.vue";
-import UserList from "../views/UserList.vue";
+import RoomListView from "../views/roomListView";
 import ChatBoard from "../views/ChatBoard.vue";
 import LoginView from "../views/LoginView.vue";
 import SignupView from "../views/SignupView.vue";
@@ -13,7 +13,7 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: UserList,
+    component: RoomListView,
     meta: { requiresAuth: true },
   },
   {
@@ -60,16 +60,6 @@ router.beforeEach((to, from, next) => {
     } else {
       next();
     }
-    // firebase.auth().onAuthStateChanged((user) => {
-    //   if (!user) {
-    //     next({
-    //       path: "/login",
-    //       query: { redirect: to.fullPath },
-    //     });
-    //   } else {
-    //     next();
-    //   }
-    // });
   } else {
     next();
   }
