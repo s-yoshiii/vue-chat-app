@@ -15,11 +15,11 @@
           <v-col v-for="room in rooms" :key="room.id" cols="4">
             <router-link :to="{ path: '/chat', query: { room_id: room.id } }">
               <v-avatar size="128" color="grey lighten-2">
-                <img :src="rooms.thumnailUrl" alt="" v-if="rooms.thumnailUrl" />
+                <img :src="room.thumnailUrl" alt="" v-if="room.thumnailUrl" />
                 <img
                   src="https://cdn.vuetifyjs.com/images/john.jpg"
                   alt="John"
-                  v-if="!rooms.thumnailUrl"
+                  v-if="!room.thumnailUrl"
                 />{{ room.id }}
               </v-avatar>
               <!-- <v-avatar color="grey lighten-2" size="128"></v-avatar> -->
