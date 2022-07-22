@@ -12,9 +12,17 @@
     <v-main>
       <v-container>
         <v-row>
-          <v-col v-for="n in 24" :key="n" cols="4">
-            <router-link :to="{ path: 'chat', query: { user_id: n } }">
-              <v-avatar color="grey lighten-2" size="128"></v-avatar>
+          <v-col v-for="room in rooms" :key="room.id" cols="4">
+            <router-link :to="{ path: '/chat', query: { room_id: room.id } }">
+              <v-avatar size="128" color="grey lighten-2">
+                <img :src="rooms.thumnailUrl" alt="" v-if="rooms.thumnailUrl" />
+                <img
+                  src="https://cdn.vuetifyjs.com/images/john.jpg"
+                  alt="John"
+                  v-if="!rooms.thumnailUrl"
+                />{{ room.id }}
+              </v-avatar>
+              <!-- <v-avatar color="grey lighten-2" size="128"></v-avatar> -->
             </router-link>
           </v-col>
         </v-row>
@@ -30,19 +38,19 @@ export default {
   components: {
     SideBar,
   },
+  data: () => ({
+    rooms: [],
+  }),
   mounted() {
     this.getRooms();
   },
   methods: {
     async getRooms() {
+      this.rooms = [];
       const roomRef = firebase.firestore().collection("rooms");
       const snapshot = await roomRef.get();
-      console.log("snapshot", snapshot);
-      //   snapshot.forEach(doc => {
-      //     console.log(doc.data())
-      //   });
       snapshot.docs.map((doc) => {
-        console.log(doc.data());
+        this.rooms.push(doc.data());
       });
     },
   },
