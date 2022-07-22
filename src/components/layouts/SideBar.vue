@@ -12,7 +12,7 @@
         <v-icon dark @click="changeIcon" v-if="!photoUrl">
           mdi-account-circle
         </v-icon>
-        <img :src="photoURL" @click="changeIcon" alt="" v-if="photoUrl" />
+        <img :src="photoUrl" @click="changeIcon" alt="" v-if="photoUrl" />
       </v-avatar>
       <div class="username">{{ auth && auth.displayName }}</div>
     </v-sheet>
