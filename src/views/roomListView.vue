@@ -25,9 +25,26 @@
 
 <script>
 import SideBar from "@/components/layouts/SideBar";
+import firebase from "@/firebase/firebase";
 export default {
   components: {
     SideBar,
+  },
+  mounted() {
+    this.getRooms();
+  },
+  methods: {
+    async getRooms() {
+      const roomRef = firebase.firestore().collection("rooms");
+      const snapshot = await roomRef.get();
+      console.log("snapshot", snapshot);
+      //   snapshot.forEach(doc => {
+      //     console.log(doc.data())
+      //   });
+      snapshot.docs.map((doc) => {
+        console.log(doc.data());
+      });
+    },
   },
 };
 </script>
