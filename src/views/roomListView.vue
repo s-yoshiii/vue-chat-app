@@ -3,6 +3,7 @@
     <SideBar />
     <v-app-bar app shrink-on-scroll>
       <v-toolbar-title>ルーム一覧</v-toolbar-title>
+      <CreateRoom />
       <v-spacer></v-spacer>
       <v-btn icon>
         <v-icon>mdi-dots-vertical</v-icon>
@@ -20,7 +21,7 @@
                   src="https://cdn.vuetifyjs.com/images/john.jpg"
                   alt="John"
                   v-if="!room.thumnailUrl"
-                />{{ room.id }}
+                />
               </v-avatar>
               <!-- <v-avatar color="grey lighten-2" size="128"></v-avatar> -->
             </router-link>
@@ -33,10 +34,12 @@
 
 <script>
 import SideBar from "@/components/layouts/SideBar";
+import CreateRoom from "@/components/modal/CreateRoom";
 import firebase from "@/firebase/firebase";
 export default {
   components: {
     SideBar,
+    CreateRoom,
   },
   data: () => ({
     rooms: [],
