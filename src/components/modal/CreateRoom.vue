@@ -54,7 +54,6 @@ export default {
   }),
   methods: {
     async onSubmit() {
-      console.log("onSubmit called", this.name, this.file);
       this.dialog = false;
       let thumnailUrl = "";
       if (this.file) {
