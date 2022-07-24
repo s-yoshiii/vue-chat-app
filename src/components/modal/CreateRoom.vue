@@ -14,13 +14,18 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                <v-text-field label="Room Name*" required></v-text-field>
+                <v-text-field
+                  label="Room Name*"
+                  required
+                  v-model="name"
+                ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-file-input
                   accept="image/*"
                   label="File input"
                   truncate-length="15"
+                  v-model="file"
                 ></v-file-input>
               </v-col>
             </v-row>
@@ -32,9 +37,7 @@
           <v-btn color="blue darken-1" text @click="dialog = false">
             Close
           </v-btn>
-          <v-btn color="blue darken-1" text @click="dialog = false">
-            Save
-          </v-btn>
+          <v-btn color="blue darken-1" text @click="onSubmit"> Save </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -42,9 +45,41 @@
 </template>
 
 <script>
+import firebase from "@/firebase/firebase";
 export default {
   data: () => ({
     dialog: false,
+    name: "",
+    file: null,
   }),
+  methods: {
+    async onSubmit() {
+      console.log("onSubmit called", this.name, this.file);
+      this.dialog = false;
+      let thumnailUrl = "";
+      if (this.file) {
+        const filePath = `/room/${this.file.name}`;
+        await firebase
+          .storage()
+          .ref()
+          .child(filePath)
+          .put(this.file)
+          .then(async (snapshot) => {
+            thumnailUrl = await snapshot.ref.getDownloadURL();
+          });
+      }
+      const roomRef = firebase.firestore().collection("rooms");
+      await roomRef
+        .add({
+          name: this.name,
+          thumnailUrl: thumnailUrl,
+          createdAt: firebase.firestore.Timestamp.now(),
+        })
+        .then((result) => {
+          console.log("success to create room", result);
+          this.dialog = false;
+        });
+    },
+  },
 };
 </script>
