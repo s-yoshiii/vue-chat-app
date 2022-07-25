@@ -2,7 +2,7 @@
   <v-app id="inspire">
     <SideBar />
     <v-main>
-      <h1>{{ room.name }}</h1>
+      <h1>{{ room ? room.name : "" }}</h1>
       <v-container class="py-8 px-6" fluid>
         <v-row>
           <v-col v-for="card in cards" :key="card" cols="12">
