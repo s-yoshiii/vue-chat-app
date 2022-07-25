@@ -66,11 +66,10 @@ export default {
     }
     this.room = roomDoc.data();
     console.log("room", this.room);
-    // const snapshot = await chatRef.get();
-    // console.log(snapshot);
-    // snapshot.forEach((doc) => {
-    //   this.messages.push(doc.data());
-    // });
+    const snapshot = await roomRef.collection("messages").get();
+    snapshot.forEach((doc) => {
+      this.messages.push(doc.data());
+    });
   },
   data: () => ({
     messages: [],
