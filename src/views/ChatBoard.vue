@@ -49,7 +49,7 @@
 </template>
 
 <script>
-// import firebase from "@/firebase/firebase";
+import firebase from "@/firebase/firebase";
 import SideBar from "@/components/layouts/SideBar";
 export default {
   components: {
@@ -58,8 +58,13 @@ export default {
 
   async created() {
     this.roomId = this.$route.query.room_id;
-    console.log("roomId", this.roomId);
-    // const chatRef = firebase.firestore().collection("chats");
+    const roomRef = firebase.firestore().collection("rooms").doc(this.roomId);
+    const roomDoc = await roomRef.get();
+    if (!roomDoc.exists) {
+      await this.$router.push("/");
+    }
+    const room = roomDoc.data();
+    console.log("room", room);
     // const snapshot = await chatRef.get();
     // console.log(snapshot);
     // snapshot.forEach((doc) => {
