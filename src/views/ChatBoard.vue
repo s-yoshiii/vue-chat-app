@@ -2,6 +2,7 @@
   <v-app id="inspire">
     <SideBar />
     <v-main>
+      <h1>{{ room.name }}</h1>
       <v-container class="py-8 px-6" fluid>
         <v-row>
           <v-col v-for="card in cards" :key="card" cols="12">
@@ -63,8 +64,8 @@ export default {
     if (!roomDoc.exists) {
       await this.$router.push("/");
     }
-    const room = roomDoc.data();
-    console.log("room", room);
+    this.room = roomDoc.data();
+    console.log("room", this.room);
     // const snapshot = await chatRef.get();
     // console.log(snapshot);
     // snapshot.forEach((doc) => {
@@ -75,6 +76,7 @@ export default {
     messages: [],
     body: "",
     roomId: "",
+    room: null,
     cards: ["Today"],
     drawer: null,
     links: [
