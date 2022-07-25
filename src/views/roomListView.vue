@@ -55,8 +55,7 @@ export default {
       snapshot.docs.map((doc) => {
         const data = { ...doc.data() };
         data.id = doc.id;
-        console.log(data);
-        this.rooms.push(doc.data());
+        this.rooms.push(data);
       });
     },
   },

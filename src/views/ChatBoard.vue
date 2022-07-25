@@ -49,25 +49,27 @@
 </template>
 
 <script>
-import firebase from "@/firebase/firebase";
+// import firebase from "@/firebase/firebase";
 import SideBar from "@/components/layouts/SideBar";
 export default {
   components: {
     SideBar,
   },
+
   async created() {
-    this.user_id = this.$route.query.user_id;
-    const chatRef = firebase.firestore().collection("chats");
-    const snapshot = await chatRef.get();
-    console.log(snapshot);
-    snapshot.forEach((doc) => {
-      this.messages.push(doc.data());
-    });
+    this.roomId = this.$route.query.room_id;
+    console.log("roomId", this.roomId);
+    // const chatRef = firebase.firestore().collection("chats");
+    // const snapshot = await chatRef.get();
+    // console.log(snapshot);
+    // snapshot.forEach((doc) => {
+    //   this.messages.push(doc.data());
+    // });
   },
   data: () => ({
     messages: [],
     body: "",
-    user_id: "",
+    roomId: "",
     cards: ["Today"],
     drawer: null,
     links: [
