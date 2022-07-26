@@ -66,7 +66,10 @@ export default {
     }
     this.room = roomDoc.data();
     console.log("room", this.room);
-    const snapshot = await roomRef.collection("messages").get();
+    const snapshot = await roomRef
+      .collection("messages")
+      .orderBy("createdAt", "asc")
+      .get();
     snapshot.forEach((doc) => {
       this.messages.push(doc.data());
     });
