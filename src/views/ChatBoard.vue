@@ -13,6 +13,7 @@
                 <template v-for="(data, index) in messages">
                   <v-list-item :key="index">
                     <v-list-item-avatar color="grey darken-1">
+                      <v-img :src="data.photoURL"></v-img>
                     </v-list-item-avatar>
 
                     <v-list-item-content>
@@ -74,6 +75,10 @@ export default {
       this.messages.push(doc.data());
     });
   },
+  mounted() {
+    this.auth = JSON.parse(sessionStorage.getItem("user"));
+    console.log("auth", this.auth);
+  },
   data: () => ({
     messages: [],
     body: "",
@@ -87,6 +92,7 @@ export default {
       ["mdi-delete", "Trash"],
       ["mdi-alert-octagon", "Spam"],
     ],
+    auth: null,
     // invalid: false,
   }),
   computed: {
@@ -102,7 +108,12 @@ export default {
       this.body = "";
     },
     submit() {
-      this.messages.unshift({ message: this.body });
+      this.messages.unshift({
+        message: this.body,
+        name: this.auth.diplayName,
+        photoURL: this.auth.photoURL,
+        createdAt: firebase.firestore.Timestamp.now(),
+      });
       this.body = "";
     },
   },
