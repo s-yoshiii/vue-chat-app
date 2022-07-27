@@ -57,7 +57,6 @@ export default {
   components: {
     SideBar,
   },
-
   async created() {
     this.roomId = this.$route.query.room_id;
     const roomRef = firebase.firestore().collection("rooms").doc(this.roomId);
@@ -66,7 +65,6 @@ export default {
       await this.$router.push("/");
     }
     this.room = roomDoc.data();
-    console.log("room", this.room);
     const snapshot = await roomRef
       .collection("messages")
       .orderBy("createdAt", "asc")
@@ -77,7 +75,6 @@ export default {
   },
   mounted() {
     this.auth = JSON.parse(sessionStorage.getItem("user"));
-    console.log("auth", this.auth);
   },
   data: () => ({
     messages: [],
@@ -93,7 +90,6 @@ export default {
       ["mdi-alert-octagon", "Spam"],
     ],
     auth: null,
-    // invalid: false,
   }),
   computed: {
     invalid() {
@@ -108,13 +104,30 @@ export default {
       this.body = "";
     },
     submit() {
-      this.messages.unshift({
+      this.messages.push({
         message: this.body,
         name: this.auth.diplayName,
         photoURL: this.auth.photoURL,
         createdAt: firebase.firestore.Timestamp.now(),
       });
-      this.body = "";
+      const roomRef = firebase.firestore().collection("rooms").doc(this.roomId);
+      console.log(roomRef.collection("messages"));
+      roomRef
+        .collection("messages")
+        .add({
+          message: this.body,
+          name: this.auth.diplayName,
+          photoURL: this.auth.photoURL,
+          createdAt: firebase.firestore.Timestamp.now(),
+        })
+        .then((result) => {
+          console.log("success", result);
+          this.body = "";
+        })
+        .catch((error) => {
+          console.log("fail", error);
+          alert("メッセージの送信に失敗しました。");
+        });
     },
   },
 };
