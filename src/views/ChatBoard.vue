@@ -57,6 +57,21 @@ export default {
   components: {
     SideBar,
   },
+  data: () => ({
+    messages: [],
+    body: "",
+    roomId: "",
+    room: null,
+    cards: ["Today"],
+    drawer: null,
+    links: [
+      ["mdi-inbox-arrow-down", "Inbox"],
+      ["mdi-send", "Send"],
+      ["mdi-delete", "Trash"],
+      ["mdi-alert-octagon", "Spam"],
+    ],
+    auth: null,
+  }),
   async created() {
     this.roomId = this.$route.query.room_id;
     const roomRef = firebase.firestore().collection("rooms").doc(this.roomId);
@@ -75,22 +90,9 @@ export default {
   },
   mounted() {
     this.auth = JSON.parse(sessionStorage.getItem("user"));
+    console.log(this.auth.displayName);
   },
-  data: () => ({
-    messages: [],
-    body: "",
-    roomId: "",
-    room: null,
-    cards: ["Today"],
-    drawer: null,
-    links: [
-      ["mdi-inbox-arrow-down", "Inbox"],
-      ["mdi-send", "Send"],
-      ["mdi-delete", "Trash"],
-      ["mdi-alert-octagon", "Spam"],
-    ],
-    auth: null,
-  }),
+
   computed: {
     invalid() {
       if (!this.body) {
@@ -106,17 +108,16 @@ export default {
     submit() {
       this.messages.push({
         message: this.body,
-        name: this.auth.diplayName,
+        name: this.auth.displayName,
         photoURL: this.auth.photoURL,
         createdAt: firebase.firestore.Timestamp.now(),
       });
       const roomRef = firebase.firestore().collection("rooms").doc(this.roomId);
-      console.log(roomRef.collection("messages"));
       roomRef
         .collection("messages")
         .add({
           message: this.body,
-          name: this.auth.diplayName,
+          name: this.auth.displayName,
           photoURL: this.auth.photoURL,
           createdAt: firebase.firestore.Timestamp.now(),
         })
