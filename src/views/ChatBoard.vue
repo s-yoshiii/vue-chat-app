@@ -80,17 +80,18 @@ export default {
       await this.$router.push("/");
     }
     this.room = roomDoc.data();
-    const snapshot = await roomRef
-      .collection("messages")
-      .orderBy("createdAt", "asc")
-      .get();
-    snapshot.forEach((doc) => {
-      this.messages.push(doc.data());
-    });
   },
   mounted() {
     this.auth = JSON.parse(sessionStorage.getItem("user"));
-    console.log(this.auth.displayName);
+    const roomRef = firebase.firestore().collection("rooms").doc(this.roomId);
+    roomRef
+      .collection("messages")
+      .orderBy("createdAt", "asc")
+      .onSnapshot((snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          this.messages.push(change.doc.data());
+        });
+      });
   },
 
   computed: {
@@ -106,12 +107,6 @@ export default {
       this.body = "";
     },
     submit() {
-      this.messages.push({
-        message: this.body,
-        name: this.auth.displayName,
-        photoURL: this.auth.photoURL,
-        createdAt: firebase.firestore.Timestamp.now(),
-      });
       const roomRef = firebase.firestore().collection("rooms").doc(this.roomId);
       roomRef
         .collection("messages")
